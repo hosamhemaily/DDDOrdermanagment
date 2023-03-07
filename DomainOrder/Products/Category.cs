@@ -1,0 +1,16 @@
+﻿using Domain.Helpers;
+using DomainOrder.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DomainOrder.Products
+{
+    public class Category:Entity,IAggregateRoot
+    {
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+    }
+}
