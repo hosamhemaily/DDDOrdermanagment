@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DomainOrder.Products
 {
-    public class Product: Entity,IAggregateRoot
+    public partial class Product: Entity
     {
         public string? Name { get; set; }
         public decimal? MinimumQuantity { get; set; }
@@ -17,16 +17,6 @@ namespace DomainOrder.Products
         public Category? Catregory { get; set; }
         public DateTime? ExpiryDate { get; set; }
 
-        public static Product Create(string Name,decimal Minimum,Guid ID) 
-        {
-            Product product = new Product
-            {
-                Name = Name,
-                MinimumQuantity = Minimum,
-                ExpiryDate = DateTime.Now,
-                Id = ID
-            };
-            return product;
-        }
+     
     }
 }

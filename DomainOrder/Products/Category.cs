@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DomainOrder.Products
 {
-    public class Category:Entity,IAggregateRoot
+    public class Category:Entity
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
