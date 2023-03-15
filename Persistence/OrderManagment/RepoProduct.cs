@@ -34,6 +34,11 @@ namespace Persistence.OrderManagment
             return _orderContext.Products.ToList();
         }
 
+        public IList<Product> GetAllByIds(Guid[] ids)
+        {
+            throw new NotImplementedException();
+        }
+
         public Product GetById()
         {
             throw new NotImplementedException();

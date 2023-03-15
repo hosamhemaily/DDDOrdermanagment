@@ -13,10 +13,12 @@ namespace DomainOrder.Orders
     {
         IrepoOrder _order;
         IrepoProduct _product;
-        public OrderManager(IrepoOrder order,IrepoProduct product)
+        IRepoTaxConfiguration _repoTax;
+        public OrderManager(IrepoOrder order,IrepoProduct product, IRepoTaxConfiguration repoTax)
         {
-            _order= order;
-            _product= product;
+            _order = order;
+            _product = product;
+            _repoTax = repoTax;
         }
         public bool CheckIfOrderProductsExpirationValid(Order order, List<Product> products)
         {
@@ -44,11 +46,26 @@ namespace DomainOrder.Orders
             return productAvailable;
         }
 
+        private bool CheckTotalOfOrders(Order order, List<Product> products)
+        {
+            
+            var myproducts =  _product.GetAllByIds(products.Select(x => x.Id).ToArray());
+            var total =  myproducts.Sum(x => x.SellPrice);
+            var taxes = _repoTax.GetById().TaxPercentage;
+            var totalshouldbe = total + (total * taxes / 100);
+            if (totalshouldbe == order.TotalAmount)
+            {
+                return true;
+            }
+            else return false;
+        }
+
         public bool ValidateCreateOrder(Order order, List<Product> products)
         {
             bool expiry = CheckIfOrderProductsExpirationValid(order, products);
             bool quantity =  CheckIfProductsAvailableOrNot(order, products);
-            if (expiry && quantity)
+            bool total = CheckTotalOfOrders(order, products);
+            if (expiry && quantity && total)
             {
                 return true;
             }
@@ -61,10 +78,10 @@ namespace DomainOrder.Orders
 
     public interface IOrderManager
     {
-        public bool CheckIfProductsAvailableOrNot(Order order, List<Product> products);
-
-        public bool CheckIfOrderProductsExpirationValid(Order order,List<Product> products);
+        
 
         public bool ValidateCreateOrder(Order order, List<Product> products);
+
+        
     }
 }

@@ -11,11 +11,12 @@ namespace DomainOrder.Products
 {
     public partial class Product: Entity
     {
-        public string? Name { get; set; }
-        public decimal? MinimumQuantity { get; set; }
-        public decimal? CurrentQuantity { get; set; }
-        public Category? Catregory { get; set; }
-        public DateTime? ExpiryDate { get; set; }
+        public string? Name { get; protected set; }
+        public decimal? MinimumQuantity { get; protected set; }
+        public decimal? CurrentQuantity { get; protected set; }
+        public Category? Catregory { get; protected set; }
+        public DateTime? ExpiryDate { get; protected set; }
+        public decimal SellPrice { get; protected set; }
 
      
     }

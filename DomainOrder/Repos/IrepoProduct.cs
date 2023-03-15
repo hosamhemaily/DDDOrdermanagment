@@ -14,6 +14,7 @@ namespace DomainOrder.Repos
         public bool update();
         public bool delete();
         public IList<Product> GetAll();
+        public IList<Product> GetAllByIds(Guid[] ids);
         public Product GetById();
     }
 }
