@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Core;
 
@@ -11,9 +12,11 @@ using Persistence.Core;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20230319134301_taxseed")]
+    partial class taxseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +70,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrderID");
 
+                    b.HasIndex("ProductID");
+
                     b.ToTable("OrderProducts");
                 });
 
@@ -91,6 +96,54 @@ namespace Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DomainOrder.Products.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("DomainOrder.Products.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CatregoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("CurrentQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("MinimumQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatregoryId");
+
+                    b.ToTable("Product");
+                });
+
             modelBuilder.Entity("DomainOrder.Orders.OrderProduct", b =>
                 {
                     b.HasOne("DomainOrder.Orders.Order", null)
@@ -98,6 +151,21 @@ namespace Persistence.Migrations
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DomainOrder.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DomainOrder.Products.Product", b =>
+                {
+                    b.HasOne("DomainOrder.Products.Category", "Catregory")
+                        .WithMany()
+                        .HasForeignKey("CatregoryId");
+
+                    b.Navigation("Catregory");
                 });
 
             modelBuilder.Entity("DomainOrder.Orders.Order", b =>

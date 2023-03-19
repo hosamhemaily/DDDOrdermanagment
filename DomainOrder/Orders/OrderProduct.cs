@@ -12,7 +12,6 @@ namespace DomainOrder.Orders
     {
         public Guid OrderID { get; protected set; }
         public Guid? ProductID { get; protected set; }
-        public Product? Product { get; protected set; }
         public decimal? Quantity { get; protected set; }
 
         public static OrderProduct CreateOrderProduct(Guid ProductID, decimal? Quantity)

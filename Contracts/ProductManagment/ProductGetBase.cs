@@ -9,12 +9,12 @@ namespace Contract
     public class ProductGetBase
     {
         public string? name { get; set; }
-        public decimal? MinimumQuantity { get; set; }
-        public decimal? CurrentQuantity { get; set; }
-        public Guid? Catregory { get;  set; }
-        public DateTime? ExpiryDate { get;  set; }
-        public decimal SellPrice { get; set; }
-        public Guid ProductId { get; set; }
+        public decimal? minimumQuantity { get; set; }
+        public decimal? currentQuantity { get; set; }
+        public Guid? catregory { get;  set; }
+        public DateTime? expiryDate { get;  set; }
+        public decimal sellPrice { get; set; }
+        public Guid productId { get; set; }
 
     }
 }

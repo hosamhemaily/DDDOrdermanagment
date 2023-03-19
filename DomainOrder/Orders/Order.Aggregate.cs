@@ -18,7 +18,8 @@ namespace DomainOrder.Orders
                 CustomerID = customer,
                 Id = guid,
                 OrderAmountNet = orderAmountNet,
-                TotalTaxes = taxes
+                TotalTaxes = taxes,
+                TotalAmount =orderAmountNet+ (orderAmountNet * taxes / 100)
             };
             order.products = orderProducts;
             return order;

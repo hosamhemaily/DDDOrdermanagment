@@ -17,7 +17,6 @@ namespace Persistence.Core
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        public DbSet<Product> Products { get; set; }
         public DbSet<TaxOrderConfigurations> TaxOrderConfigurations { get; set; }
         public OrderContext(DbContextOptions<OrderContext> options)
           : base(options)
@@ -27,9 +26,9 @@ namespace Persistence.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-           // modelBuilder.Entity<Customer>().HasIndex(prop => prop.Email).IsUnique();
-           // modelBuilder.Entity<Wallet>().HasIndex(prop => prop.).IsUnique();
+            var taxconfig = DomainOrder.Orders.TaxOrderConfigurations.Create(new Guid("ec809e3d-d510-4a75-9df5-10ca438a3062") ,10);
+            modelBuilder.Entity<TaxOrderConfigurations>().HasData(taxconfig);
+
 
         }
 

@@ -36,7 +36,7 @@ namespace Persistence.OrderManagment
 
         public TaxOrderConfigurations GetById()
         {
-            throw new NotImplementedException();
+            return _orderContext.TaxOrderConfigurations.FirstOrDefault();
         }
 
         public bool update()

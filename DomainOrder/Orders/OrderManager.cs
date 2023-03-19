@@ -38,7 +38,7 @@ namespace DomainOrder.Orders
             bool productAvailable = true;
             order.products?.ForEach(productinorder =>
             {
-                if (products.Where(x => x.Id == productinorder.ProductID).FirstOrDefault()?.CurrentQuantity <= productinorder.Quantity)
+                if (products.Where(x => x.Id == productinorder.ProductID).FirstOrDefault()== null ||  products.Where(x => x.Id == productinorder.ProductID).FirstOrDefault()?.CurrentQuantity <= productinorder.Quantity)
                 {
                     productAvailable= false;
                 }
@@ -65,7 +65,7 @@ namespace DomainOrder.Orders
             bool expiry = CheckIfOrderProductsExpirationValid(order, products);
             bool quantity =  CheckIfProductsAvailableOrNot(order, products);
             bool total = CheckTotalOfOrders(order, products);
-            if (expiry && quantity && total)
+            if (!expiry && quantity && total)
             {
                 return true;
             }

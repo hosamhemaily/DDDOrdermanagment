@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DomainOrder.Orders
 {
-    public class TaxOrderConfigurations: Entity
+    public partial class TaxOrderConfigurations: Entity
     {
         public int TaxPercentage { get; set; }
     }

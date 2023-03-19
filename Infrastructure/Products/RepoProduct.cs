@@ -38,7 +38,7 @@ namespace Infrastructure.Products
                 var myproducts = JsonSerializer.Deserialize<List<ProductGetBase>>(response.Content.ReadAsStream());
                 myproducts?.ForEach(element =>
                 {
-                    var p = Product.Create(element.name, element.MinimumQuantity, element.ProductId);
+                    var p = Product.Create(element.name, element.minimumQuantity, element.productId,element.sellPrice);
                     products.Add(p);
                 });
             };
@@ -48,7 +48,8 @@ namespace Infrastructure.Products
 
         public IList<Product> GetAllByIds(Guid[] ids)
         {
-            throw new NotImplementedException();
+            var products = GetAll();
+            return products.Where(x=>ids.Contains( x.Id)).ToList();
         }
 
         public Product GetById()
