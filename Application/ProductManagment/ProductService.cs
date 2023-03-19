@@ -16,16 +16,25 @@ namespace Application.ProductManagment
         {
             _productRepo = productRepo;
         }
-        public bool CreateProduct(ProductDTO product)
+        public bool CreateProduct(ProductContractDTO product)
         {
-            var myproduct =  Product.Create(product?.Name, product.MinimumQuantity, new Guid());
+            var myproduct =  Product.Create(product?.name, product.MinimumQuantity, new Guid());
             _productRepo.add(myproduct);
             return true;
         }
 
-        public List<ProductDTO> GetProducts()
+        public List<ProductContractDTO> GetProducts()
         {
-            throw new NotImplementedException();
+            var prs = _productRepo.GetAll();
+            var products =  prs.Select(x => new ProductContractDTO{
+                name= x.Name,
+                CategoryID  =x.Catregory?.Id,
+                CurrentQuantity=x.CurrentQuantity,
+                MinimumQuantity = x.MinimumQuantity
+               
+            }).ToList();
+            
+            return products;
         }
 
         public bool UpdateProduct(ProductUpdate update)

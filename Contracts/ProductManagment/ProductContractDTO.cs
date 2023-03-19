@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Contracts.ProductManagment
 {
-    public class ProductDTO
+    public class ProductContractDTO
     {
-        public string? Name { get; set; }
-        public decimal MinimumQuantity { get; set; }
-        public int? CurrentQuantity { get; set; }
-        public int? CategoryID { get; set; }
+        public string? name { get; set; }
+        public decimal? MinimumQuantity { get; set; }
+        public decimal? CurrentQuantity { get; set; }
+        public Guid? CategoryID { get; set; }
+        public Guid ProductId { get; set; }
     }
 
     public class ProductUpdate

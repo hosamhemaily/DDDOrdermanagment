@@ -37,7 +37,7 @@ namespace Application.OrderManagment
             order.Products?.ForEach(orderproduct =>
             {
                 orderProducts.Add(OrderProduct.CreateOrderProduct(
-                    ProductID: orderproduct.ID,
+                    ProductID: orderproduct.ProductID,
                     Quantity: orderproduct.Quantity));
             });
 

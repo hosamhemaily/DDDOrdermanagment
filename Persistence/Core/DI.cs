@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.OrderManagment;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Products;
 
 namespace Persistence.Core
 {

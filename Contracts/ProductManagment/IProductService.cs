@@ -8,11 +8,11 @@ namespace Contracts.ProductManagment
 {
     public interface IProductService
     {
-        bool CreateProduct(ProductDTO product);
+        bool CreateProduct(ProductContractDTO product);
 
         bool UpdateProduct(ProductUpdate update);
 
-        public List<ProductDTO> GetProducts();
+        public List<ProductContractDTO> GetProducts();
 
     }
 

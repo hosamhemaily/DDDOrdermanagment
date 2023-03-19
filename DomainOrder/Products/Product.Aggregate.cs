@@ -11,7 +11,7 @@ namespace DomainOrder.Products
 {
     public partial class Product: IAggregateRoot
     {
-        public static Product Create(string Name,decimal Minimum,Guid ID) 
+        public static Product Create(string Name,decimal? Minimum,Guid ID) 
         {
             Product product = new Product
             {
