@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Data;
 using System.Text.Json;
 using DomainOrder.Orders;
-using Contracts.ProductManagment;
+using Contract;
 
 namespace Infrastructure.Products
 {
@@ -35,7 +35,7 @@ namespace Infrastructure.Products
             HttpResponseMessage response = client.GetAsync(path+$"/Product").Result;
             if (response.IsSuccessStatusCode)
             {
-                var myproducts = JsonSerializer.Deserialize<List<ProductContractDTO>>(response.Content.ReadAsStream());
+                var myproducts = JsonSerializer.Deserialize<List<ProductGetBase>>(response.Content.ReadAsStream());
                 myproducts?.ForEach(element =>
                 {
                     var p = Product.Create(element.name, element.MinimumQuantity, element.ProductId);

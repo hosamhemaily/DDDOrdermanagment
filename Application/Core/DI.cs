@@ -1,7 +1,5 @@
 ﻿using Application.OrderManagment;
-using Application.ProductManagment;
 using Contracts.OrderManagment;
-using Contracts.ProductManagment;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,7 +14,6 @@ namespace Application.Core
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IProductService, ProductService>();
             return services;
         }
     }
