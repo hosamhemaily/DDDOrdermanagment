@@ -29,7 +29,7 @@ namespace Application.OrderManagment
             throw new NotImplementedException();
         }
 
-        public bool CreateOrder(OrderDTO order)
+        public Guid? CreateOrder(OrderDTO order)
         {
             var tax =  _repoTaxConfig.GetAll().FirstOrDefault();
             
@@ -51,13 +51,19 @@ namespace Application.OrderManagment
                 );
 
             var products =  _repoProduct.GetAll();
-            bool resultValidation =  _orderManager.ValidateCreateOrder(resultCreateOrder, products.ToList());
-            if (!resultValidation)
+           
+             var resultvalidation =  _orderManager.ValidateCreateOrder(resultCreateOrder, products.ToList());
+            //if (!resultValidation)
+            //{
+            //    throw new Exception("Not valid order !!");
+            //}
+            if (resultvalidation)
             {
-                throw new Exception("Not valid order !!");
+                var result = _repoOrder.add(resultCreateOrder);
+                return result;
             }
-            _repoOrder.add(resultCreateOrder);
-            return true;
+            return null;
+            
         }
     }
 }

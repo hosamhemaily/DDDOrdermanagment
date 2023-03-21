@@ -62,6 +62,7 @@ namespace DomainOrder.Orders
 
         public bool ValidateCreateOrder(Order order, List<Product> products)
         {
+            
             bool expiry = CheckIfOrderProductsExpirationValid(order, products);
             bool quantity =  CheckIfProductsAvailableOrNot(order, products);
             bool total = CheckTotalOfOrders(order, products);
@@ -78,10 +79,7 @@ namespace DomainOrder.Orders
 
     public interface IOrderManager
     {
-        
-
         public bool ValidateCreateOrder(Order order, List<Product> products);
-
         
     }
 }

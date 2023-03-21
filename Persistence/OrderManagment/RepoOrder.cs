@@ -17,11 +17,11 @@ namespace Persistence.OrderManagment
         {
             _orderContext= orderContext;
         }
-        public bool add(Order order)
+        public Guid add(Order order)
         {
             _orderContext.Add(order);
             _orderContext.SaveChanges();
-            return true;
+            return new Guid();
         }
 
         public bool delete()

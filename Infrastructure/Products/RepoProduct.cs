@@ -30,19 +30,28 @@ namespace Infrastructure.Products
 
         public IList<Product> GetAll()
         {
-            IList<Product> products = new List<Product>();
-
-            HttpResponseMessage response = client.GetAsync(path+$"/Product").Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var myproducts = JsonSerializer.Deserialize<List<ProductGetBase>>(response.Content.ReadAsStream());
-                myproducts?.ForEach(element =>
+                IList<Product> products = new List<Product>();
+
+                HttpResponseMessage response = client.GetAsync(path + $"/Product").Result;
+                if (response.IsSuccessStatusCode)
                 {
-                    var p = Product.Create(element.name, element.minimumQuantity, element.productId,element.sellPrice);
-                    products.Add(p);
-                });
-            };
-            return products;
+                    var myproducts = JsonSerializer.Deserialize<List<ProductGetBase>>(response.Content.ReadAsStream());
+                    myproducts?.ForEach(element =>
+                    {
+                        var p = Product.Create(element.name, element.minimumQuantity, element.productId, element.sellPrice);
+                        products.Add(p);
+                    });
+                };
+                return products;
+            }
+            catch (Exception)
+            {
+
+                return new List<Product>();
+            }
+          
             
         }
 
