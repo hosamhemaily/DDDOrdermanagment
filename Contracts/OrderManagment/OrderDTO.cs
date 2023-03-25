@@ -17,6 +17,6 @@ namespace Contracts.OrderManagment
     public class ProductOrderDTO
     {
         public Guid ProductID { get; set; }
-        public decimal? Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }

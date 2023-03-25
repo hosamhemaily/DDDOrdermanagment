@@ -46,10 +46,10 @@ namespace DomainOrder.Orders
             return productAvailable;
         }
 
-        private bool CheckTotalOfOrders(Order order, List<Product> products)
+        private bool CheckTotalOfOrders(Order order)
         {
             
-            var myproducts =  _product.GetAllByIds(products.Select(x => x.Id).ToArray());
+            var myproducts =  _product.GetAllByIds(order.products.Select(x => (Guid)x.ProductID).ToArray());
             var total =  myproducts.Sum(x => x.SellPrice);
             var taxes = _repoTax.GetById().TaxPercentage;
             var totalshouldbe = total + (total * taxes / 100);
@@ -65,7 +65,7 @@ namespace DomainOrder.Orders
             
             bool expiry = CheckIfOrderProductsExpirationValid(order, products);
             bool quantity =  CheckIfProductsAvailableOrNot(order, products);
-            bool total = CheckTotalOfOrders(order, products);
+            bool total = CheckTotalOfOrders(order);
             if (!expiry && quantity && total)
             {
                 return true;

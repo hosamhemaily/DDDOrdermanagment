@@ -21,7 +21,7 @@ namespace Persistence.OrderManagment
         {
             _orderContext.Add(order);
             _orderContext.SaveChanges();
-            return new Guid();
+            return order.Id;
         }
 
         public bool delete()

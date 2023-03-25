@@ -2,6 +2,10 @@
 using DomainOrder.Orders;
 using DomainOrder.Products;
 using DomainOrder.Repos;
+using MassTransit;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using SharedAbstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +20,16 @@ namespace Application.OrderManagment
         IrepoOrder _repoOrder;
         IrepoProduct _repoProduct;
         IRepoTaxConfiguration _repoTaxConfig;
+        private readonly IPublishEndpoint _publishEndpoint;
+
         public OrderService(IrepoOrder repoOrder, IRepoTaxConfiguration repoTaxConfig, IrepoProduct repoProduct,
-            IOrderManager orderManager) 
+            IOrderManager orderManager, IPublishEndpoint publishEndpoint) 
         {
             _repoProduct = repoProduct;
             _repoOrder = repoOrder;
             _repoTaxConfig = repoTaxConfig;
             _orderManager = orderManager;
+            _publishEndpoint = publishEndpoint;
         }
         public bool CancelOrder(string id)
         {
@@ -60,6 +67,28 @@ namespace Application.OrderManagment
             if (resultvalidation)
             {
                 var result = _repoOrder.add(resultCreateOrder);
+                //var factory = new ConnectionFactory { HostName = "localhost" };
+                //using var connection = factory.CreateConnection();
+                //using var channel = connection.CreateModel();
+
+                //channel.QueueDeclare(queue: "ordercreated",
+                //                     durable: false,
+                //                     exclusive: false,
+                //                     autoDelete: false,
+                //                     arguments: null);
+                //var orderqueue = new OrderCreated() { ID = result, Products = order.Products.Select(x => new ProductDTO { productid = x.ProductID, quantity = x.Quantity }).ToList() };
+                //var sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(orderqueue));
+                ////var body = Encoding.UTF8.GetBytes(message);
+
+                //channel.BasicPublish(exchange: string.Empty,
+                //         routingKey: "ordercreated",
+                //         basicProperties: null,
+                //         body: sendBytes);
+                _publishEndpoint.Publish(new OrderCreated
+                {
+                    ID = result,
+                    Products = order.Products.Select(x => new ProductDTO { productid = x.ProductID, quantity = x.Quantity }).ToList()
+                });
                 return result;
             }
             return null;
