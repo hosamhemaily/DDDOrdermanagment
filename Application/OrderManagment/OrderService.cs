@@ -67,23 +67,7 @@ namespace Application.OrderManagment
             if (resultvalidation)
             {
                 var result = _repoOrder.add(resultCreateOrder);
-                //var factory = new ConnectionFactory { HostName = "localhost" };
-                //using var connection = factory.CreateConnection();
-                //using var channel = connection.CreateModel();
-
-                //channel.QueueDeclare(queue: "ordercreated",
-                //                     durable: false,
-                //                     exclusive: false,
-                //                     autoDelete: false,
-                //                     arguments: null);
-                //var orderqueue = new OrderCreated() { ID = result, Products = order.Products.Select(x => new ProductDTO { productid = x.ProductID, quantity = x.Quantity }).ToList() };
-                //var sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(orderqueue));
-                ////var body = Encoding.UTF8.GetBytes(message);
-
-                //channel.BasicPublish(exchange: string.Empty,
-                //         routingKey: "ordercreated",
-                //         basicProperties: null,
-                //         body: sendBytes);
+               
                 _publishEndpoint.Publish(new OrderCreated
                 {
                     ID = result,

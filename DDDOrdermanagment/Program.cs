@@ -6,19 +6,28 @@ using MassTransit;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMassTransit(mt => mt.AddMassTransit(x =>
-{
-    x.UsingRabbitMq((cntxt, cfg) =>
-    {
-        cfg.Host("localhost", "/", c =>
-        {
-            c.Username("guest");
-            c.Password("guest");
-        });
-    });
-}));
+
 
 builder.Services.AddControllers();
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host("amqp://guest:guest@localhost:5672");
+    });
+});
+
+//config.AddMassTransit(x =>
+//{
+//    x.UsingRabbitMq((cntxt, cfg) =>
+//    {
+//        cfg.Host("localhost", "/", c =>
+//        {
+//            c.Username("guest");
+//            c.Password("guest");
+//        });
+//    });
+//}));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
