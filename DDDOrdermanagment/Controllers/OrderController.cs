@@ -21,10 +21,17 @@ namespace DDDOrdermanagment.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost(Name = "add")]
+        [HttpPost("add")]
         public bool Create(OrderDTO order)
         {
             _orderService.CreateOrder(order);
+            return true;
+        } 
+        
+        [HttpPost("cancel")]
+        public bool Cancel(Guid id)
+        {
+            _orderService.CancelOrder(id);
             return true;
         }
     }

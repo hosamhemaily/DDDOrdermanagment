@@ -24,5 +24,28 @@ namespace DomainOrder.Orders
             order.products = orderProducts;
             return order;
         }
+
+        public static Order CancelOrder(Order order)
+        {
+            if (order.Delivered_YN == null || (bool)order.Delivered_YN)
+                throw new Exception("Order delivered");
+
+            order.Canceled_YN= true;
+            return order;
+        }
+        public static Order DeleteOrder(Order order)
+        {
+            if (order.Delivered_YN == null || (bool)order.Delivered_YN)
+                throw new Exception("Order delivered");
+
+            order.Deleted_YN= true;
+            return order;
+        }
+
+        public static Order Deliverorder(Order order)
+        {
+            order.Delivered_YN = true;
+            return order;
+        }
     }
 }

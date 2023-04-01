@@ -9,6 +9,8 @@ namespace Contracts.OrderManagment
     public interface IOrderService
     {
         public Guid? CreateOrder(OrderDTO order);
-        public bool CancelOrder(string id);
+        public bool CancelOrder(Guid id);
+        public bool DeliveryOrder(Guid id);
+        public bool DeleteOrder(Guid id);
     }
 }

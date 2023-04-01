@@ -2,6 +2,7 @@ using Persistence.Core;
 using Application.Core;
 using Domain.Helpers;
 using MassTransit;
+using Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddMassTransit(config =>
 {
+    config.AddConsumer<OrderFailedConsumer>();
     config.UsingRabbitMq((ctx, cfg) =>
     {
         cfg.Host("amqp://guest:guest@localhost:5672");
+        cfg.ReceiveEndpoint("order-failed-qu", c =>
+        {
+            c.ConfigureConsumer<OrderFailedConsumer>(ctx);
+        });
     });
 });
 

@@ -14,6 +14,8 @@ namespace DomainOrder.Orders
         public decimal? TotalTaxes { get; protected set; }
         public decimal? TotalAmount { get; protected set; }
         public bool? Canceled_YN { get; protected set; }
+        public bool? Delivered_YN { get; protected set; }
+        public bool? Deleted_YN { get; protected set; }
         public List<OrderProduct>? products { get; protected set; }
        
     }

@@ -10,9 +10,9 @@ namespace DomainOrder.Repos
     public interface IrepoOrder
     {
         public Guid add(Order order);
-        public bool update();
+        public bool update(Order order);
         public bool delete();
         public List<Order> GetAll();
-        public Order GetById();
+        public Order GetById(Guid id);
     }
 }

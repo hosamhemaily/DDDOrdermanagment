@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MassTransit.ValidationResultExtensions;
 
 namespace Application.OrderManagment
 {
@@ -31,11 +32,7 @@ namespace Application.OrderManagment
             _orderManager = orderManager;
             _publishEndpoint = publishEndpoint;
         }
-        public bool CancelOrder(string id)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public Guid? CreateOrder(OrderDTO order)
         {
             var tax =  _repoTaxConfig.GetAll().FirstOrDefault();
@@ -77,6 +74,41 @@ namespace Application.OrderManagment
             }
             return null;
             
+        }
+
+        public bool CancelOrder(Guid id)
+        {
+            var order =  _repoOrder.GetById(id);
+            if (order == null )
+                throw new ArgumentNullException("id");
+            
+
+            Order.CancelOrder(order);
+            _repoOrder.update(order);
+
+            _publishEndpoint.Publish(new OrderCanceled
+            {
+                id =id,
+            });
+
+            return true;
+        }
+
+        public bool DeliveryOrder(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteOrder(Guid id)
+        {
+            var order = _repoOrder.GetById(id);
+            if (order == null)
+                throw new ArgumentNullException("id");
+
+
+            Order.DeleteOrder(order);
+            _repoOrder.update(order);
+            return true;
         }
     }
 }

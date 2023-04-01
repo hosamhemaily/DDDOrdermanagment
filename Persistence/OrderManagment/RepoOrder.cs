@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Persistence.OrderManagment
 {
@@ -34,14 +35,17 @@ namespace Persistence.OrderManagment
             throw new NotImplementedException();
         }
 
-        public Order GetById()
+        public Order GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var order = _orderContext.Orders.Find(id);
+            return order;
         }
 
-        public bool update()
+        public bool update(Order order)
         {
-            throw new NotImplementedException();
+            _orderContext.Update(order);
+            _orderContext.SaveChanges();
+            return true;
         }
     }
 }

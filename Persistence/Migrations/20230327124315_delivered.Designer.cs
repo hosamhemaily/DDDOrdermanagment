@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Core;
 
@@ -11,9 +12,11 @@ using Persistence.Core;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    partial class OrderContextModelSnapshot : ModelSnapshot
+    [Migration("20230327124315_delivered")]
+    partial class delivered
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +36,6 @@ namespace Persistence.Migrations
 
                     b.Property<string>("CustomerID")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Deleted_YN")
-                        .HasColumnType("bit");
 
                     b.Property<bool?>("Delivered_YN")
                         .HasColumnType("bit");
