@@ -10,7 +10,6 @@ namespace DomainOrder.Orders
 {
     public class OrderProduct : Entity
     {
-        public Guid OrderID { get; protected set; }
         public Guid? ProductID { get; protected set; }
         public decimal? Quantity { get; protected set; }
 
