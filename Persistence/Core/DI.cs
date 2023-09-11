@@ -18,6 +18,8 @@ namespace Persistence.Core
             services.AddScoped<IrepoOrder, RepoOrder>();
             services.AddScoped<IRepoTaxConfiguration, RepoTaxConfiguration>();
             services.AddScoped<IrepoProduct, RepoProduct>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             return services;
         }
     }

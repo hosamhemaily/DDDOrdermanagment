@@ -21,7 +21,6 @@ namespace Persistence.OrderManagment
         public Guid add(Order order)
         {
             _orderContext.Add(order);
-            _orderContext.SaveChanges();
             return order.Id;
         }
 

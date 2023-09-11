@@ -24,8 +24,7 @@ namespace DDDOrdermanagment.Controllers
         [HttpPost("add")]
         public bool Create(OrderDTO order)
         {
-            _orderService.CreateOrder(order);
-            return true;
+            return _orderService.CreateOrder(order)!=null ? true:false;
         } 
         
         [HttpPost("cancel")]

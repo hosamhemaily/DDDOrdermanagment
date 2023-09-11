@@ -23,9 +23,9 @@ namespace DomainOrder.Orders
         public bool CheckIfOrderProductsExpirationValid(Order order, List<Product> products)
         {
             bool expirationvalid_YN = true;
-            products.ForEach(product =>
+            order.products?.ForEach(product =>
             {
-                if (product.ExpiryDate <= DateTime.Now) 
+                if (products.Where(x=>x.Id == product.Id).FirstOrDefault()?.ExpiryDate <= DateTime.Now) 
                 {
                     expirationvalid_YN = false;
                 }
@@ -63,10 +63,10 @@ namespace DomainOrder.Orders
         public bool ValidateCreateOrder(Order order, List<Product> products)
         {
             
-            bool expiry = CheckIfOrderProductsExpirationValid(order, products);
+            bool expiryvalid = CheckIfOrderProductsExpirationValid(order, products);
             bool quantity =  CheckIfProductsAvailableOrNot(order, products);
             bool total = CheckTotalOfOrders(order);
-            if (!expiry && quantity && total)
+            if (expiryvalid && quantity && total)
             {
                 return true;
             }

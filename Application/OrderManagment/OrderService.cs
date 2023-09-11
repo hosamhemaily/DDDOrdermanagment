@@ -22,15 +22,17 @@ namespace Application.OrderManagment
         IrepoProduct _repoProduct;
         IRepoTaxConfiguration _repoTaxConfig;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IUnitOfWork _unitOfWork;
 
         public OrderService(IrepoOrder repoOrder, IRepoTaxConfiguration repoTaxConfig, IrepoProduct repoProduct,
-            IOrderManager orderManager, IPublishEndpoint publishEndpoint) 
+            IOrderManager orderManager, IPublishEndpoint publishEndpoint,IUnitOfWork unitOfWork) 
         {
             _repoProduct = repoProduct;
             _repoOrder = repoOrder;
             _repoTaxConfig = repoTaxConfig;
             _orderManager = orderManager;
             _publishEndpoint = publishEndpoint;
+            _unitOfWork = unitOfWork;
         }
       
         public Guid? CreateOrder(OrderDTO order)
@@ -64,7 +66,8 @@ namespace Application.OrderManagment
             if (resultvalidation)
             {
                 var result = _repoOrder.add(resultCreateOrder);
-               
+                _unitOfWork.SaveChanges();
+
                 _publishEndpoint.Publish(new OrderCreated
                 {
                     ID = result,
@@ -72,8 +75,12 @@ namespace Application.OrderManagment
                 });
                 return result;
             }
-            return null;
-            
+            else
+            {
+                throw new Exception("this order cant be created because it is not valid !!");
+
+            }
+
         }
 
         public bool CancelOrder(Guid id)
@@ -88,7 +95,7 @@ namespace Application.OrderManagment
 
             _publishEndpoint.Publish(new OrderCanceled
             {
-                id =id,
+                ID =id,
             });
 
             return true;
