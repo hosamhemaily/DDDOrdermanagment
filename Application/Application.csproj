@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <Reference Include="SharedAbstraction">
-      <HintPath>C:\Users\hyehia\source\repos\DDDEcommerce\SharedAbstraction\bin\Debug\net6.0\SharedAbstraction.dll</HintPath>
+      <HintPath>..\..\DDDEcommerce\SharedAbstraction\bin\Debug\net6.0\SharedAbstraction.dll</HintPath>
     </Reference>
   </ItemGroup>
 
